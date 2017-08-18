@@ -14,6 +14,7 @@ import {
 
 // 引入组件
 import Girl from './girl';
+import NavigationBar from './NavigationBar';
 
 export default class Boy extends Component{
 
@@ -28,6 +29,14 @@ export default class Boy extends Component{
 
     return (
       <View style={styles.container}>
+        <NavigationBar
+          title={'Boy'}
+          statusBar={{
+            // backgroundColor:'#faf',
+            // barStyle:'light-content',
+            // hidden:true
+          }}
+        />
         <Text>男孩</Text>
         <Text
           onPress={()=>{
@@ -57,6 +66,6 @@ const styles = StyleSheet.create({
   container:{
     flex:1,
     backgroundColor:'green',
-    justifyContent:'center',
+    // justifyContent:'center',
   }
 });
