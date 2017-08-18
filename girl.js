@@ -11,6 +11,9 @@ import {
   View
 } from 'react-native';
 
+// 引入组件
+import NavigationBar from './NavigationBar';
+
 export default class Girl extends Component{
 
   constructor(props){
@@ -20,6 +23,12 @@ export default class Girl extends Component{
   render(){
     return (
       <View style={styles.container}>
+        <NavigationBar
+          title={'Girl'}
+          style={{
+            backgroundColor:'#ef6d79'
+          }}
+        />
         <Text>女孩</Text>
         <Text>收到男孩的：{this.props.word}</Text>
         <Text
@@ -37,7 +46,7 @@ export default class Girl extends Component{
 const styles = StyleSheet.create({
   container:{
     flex:1,
-    backgroundColor:'olive',
+    // backgroundColor:'olive',
     // justifyContent:'center',
   }
 });

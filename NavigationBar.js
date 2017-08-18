@@ -26,6 +26,7 @@ const StatusBarShape = {
 export default class NavigationBar extends Component{
 
   static propTypes = {
+    style:View.propTypes.style,
     title:PropTypes.string,
     titleView:PropTypes.element,  // 属性是react某个元素
     hide:PropTypes.bool,
@@ -35,13 +36,12 @@ export default class NavigationBar extends Component{
   }
 
   // 默认props不起作用
-  // static defaultProps = {
-  //   statusBar:{
-  //     backgroundColor:'red',
-  //     barStyle:'light-content',
-  //     hidden:false,
-  //   }
-  // };
+  static defaultProps = {
+    statusBar:{
+      barStyle:'light-content',
+      hidden:false,
+    }
+  };
 
   constructor(props){
     // 初始化父类构造函数
@@ -63,7 +63,7 @@ export default class NavigationBar extends Component{
       {this.props.rightButton}
     </View>;
     return (
-      <View style={styles.container}>
+      <View style={[styles.container,this.props.style]}>
         {status}
         {content}
       </View>
@@ -75,16 +75,14 @@ export default class NavigationBar extends Component{
 const styles = StyleSheet.create({
   container:{
     // 整体
-    backgroundColor:'#ccc',
+    backgroundColor:'#000',
   },
   statusBar:{
     // 状态栏
-    backgroundColor:'#fff',
     height:Platform.OS==='ios'?STATUS_BAR_HEIGHT:0,
   },
   navBar:{
     // 导航栏
-    backgroundColor:'#ccc',
     justifyContent:'space-between',
     alignItems:'center',
     height:Platform.OS == 'ios'?NAV_BAR_HEIGHT_IOS:NAV_BAR_HEIGHT_ANDROID,

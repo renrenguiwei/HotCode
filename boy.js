@@ -31,11 +31,6 @@ export default class Boy extends Component{
       <View style={styles.container}>
         <NavigationBar
           title={'Boy'}
-          statusBar={{
-            // backgroundColor:'#faf',
-            // barStyle:'light-content',
-            // hidden:true
-          }}
         />
         <Text>男孩</Text>
         <Text
@@ -65,7 +60,7 @@ export default class Boy extends Component{
 const styles = StyleSheet.create({
   container:{
     flex:1,
-    backgroundColor:'green',
+    // backgroundColor:'green',
     // justifyContent:'center',
   }
 });
