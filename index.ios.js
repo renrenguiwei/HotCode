@@ -16,6 +16,7 @@ import {
 // 1、引入外部包
 import TabNavigator from 'react-native-tab-navigator';
 import CustomerComponents, {Navigator} from 'react-native-deprecated-custom-components';
+import ListViewTest from './ListViewTest';
 // 2、引入组件
 import Boy from './boy.js';
 // 3、屏蔽掉黄色警告
@@ -35,7 +36,7 @@ export default class HotCode extends Component {
 
       <Navigator
         initialRoute = {{
-          component:Boy,
+          component:ListViewTest,
         }}
         renderScene = {(route,navigator)=>{
           return <route.component navigator={navigator} {...route.props}/>;

@@ -3,9 +3,7 @@
  */
 import React, {Component} from 'react';
 import {
-  AppRegistry,
   StyleSheet,
-  Navigator,
   TouchableOpacity,
   Image,
   Text,
