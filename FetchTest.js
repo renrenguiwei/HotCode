@@ -15,6 +15,7 @@ import {
 
 // 引入组件
 import NavigationBar from './NavigationBar';
+import HttpUnit from './HttpUnit';
 
 export default class FetchTest extends Component{
 
@@ -26,39 +27,62 @@ export default class FetchTest extends Component{
   }
 
   onLoad(url){
-    fetch(url)
-        .then(response=>response.json())
-        .then(result=>{
-          this.setState({
-            result:JSON.stringify(result)
-          });
-        })
-        .catch(error=>{
-          this.setState({
-            result:JSON.stringify(error)
-          });
-        })
+    // fetch(url)
+    //     .then(response=>response.json())
+    //     .then(result=>{
+    //       this.setState({
+    //         result:JSON.stringify(result)
+    //       });
+    //     })
+    //     .catch(error=>{
+    //       this.setState({
+    //         result:JSON.stringify(error)
+    //       });
+    //     })
+
+    HttpUnit.get(url)
+      .then(result=>{
+        this.setState({
+          result:JSON.stringify(result)
+        });
+      })
+      .catch(error=>{
+        this.setState({
+          result:JSON.stringify(error)
+        });
+      })
   }
   onSubmit(url,data){
-    fetch(url,{
-      method:'POST',
-      header:{
-        'Accept':'application/json',
-        'Content-Type':'application/json',
-      },
-      body:JSON.stringify(data) // 对象->字符串
-    })
-        .then(response=>response.json())
-        .then(result=>{
-          this.setState({
-            result:JSON.stringify(result)
-          });
-        })
-        .catch(error=>{
-          this.setState({
-            result:JSON.stringify(error)
-          });
-        })
+    // fetch(url,{
+    //   method:'POST',
+    //   header:{
+    //     'Accept':'application/json',
+    //     'Content-Type':'application/json',
+    //   },
+    //   body:JSON.stringify(data) // 对象->字符串
+    // })
+    //     .then(response=>response.json())
+    //     .then(result=>{
+    //       this.setState({
+    //         result:JSON.stringify(result)
+    //       });
+    //     })
+    //     .catch(error=>{
+    //       this.setState({
+    //         result:JSON.stringify(error)
+    //       });
+    //     })
+    HttpUnit.post(url,data)
+      .then(result=>{
+        this.setState({
+          result:JSON.stringify(result)
+        });
+      })
+      .catch(error=>{
+        this.setState({
+          result:JSON.stringify(error)
+        });
+      })
   }
 
   render(){
