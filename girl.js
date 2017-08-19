@@ -6,6 +6,7 @@ import {
   AppRegistry,
   StyleSheet,
   Navigator,
+  TouchableOpacity,
   Image,
   Text,
   View
@@ -20,14 +21,33 @@ export default class Girl extends Component{
     super(props);
   }
 
+  // 导航栏按钮点击
+  renderButton(image){
+    return (
+      <TouchableOpacity
+        onPress={()=>{
+          this.props.navigator.pop();
+        }}
+      >
+        <Image style={{width:22,height:22,margin:5,}} source={image}/>
+      </TouchableOpacity>
+    );
+  }
+
   render(){
     return (
       <View style={styles.container}>
         <NavigationBar
-          title={'Girl'}
           style={{
             backgroundColor:'#ef6d79'
           }}
+          leftButton={
+            this.renderButton(require('./res/images/ic_arrow_back_white_36pt.png'))
+          }
+          title={'Girl'}
+          rightButton={
+            this.renderButton(require('./res/images/ic_star.png'))
+          }
         />
         <Text>女孩</Text>
         <Text>收到男孩的：{this.props.word}</Text>
