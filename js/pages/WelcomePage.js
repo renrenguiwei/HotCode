@@ -4,9 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-  AppRegistry,
   StyleSheet,
-  Image,
   Text,
   View
 } from 'react-native';
@@ -41,7 +39,7 @@ export default class WelcomePage extends Component{
           title = {'Welcome'}
         />
         <View>
-          <Text>Welcome Back!</Text>
+          <Text></Text>
         </View>
       </View>
     );

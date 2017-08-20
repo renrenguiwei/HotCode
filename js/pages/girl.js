@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 // 引入组件
-import NavigationBar from './NavigationBar';
+import NavigationBar from '../common/NavigationBar';
 
 export default class Girl extends Component{
 
@@ -40,11 +40,11 @@ export default class Girl extends Component{
             backgroundColor:'#ef6d79'
           }}
           leftButton={
-            this.renderButton(require('./res/images/ic_arrow_back_white_36pt.png'))
+            this.renderButton(require('../../res/images/ic_arrow_back_white_36pt.png'))
           }
           title={'Girl'}
           rightButton={
-            this.renderButton(require('./res/images/ic_star.png'))
+            this.renderButton(require('../..//res/images/ic_star.png'))
           }
         />
         <Text>女孩</Text>

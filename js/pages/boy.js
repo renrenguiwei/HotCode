@@ -14,7 +14,7 @@ import {
 
 // 引入组件
 import Girl from './girl';
-import NavigationBar from './NavigationBar';
+import NavigationBar from '../common/NavigationBar';
 
 export default class Boy extends Component{
 

@@ -15,6 +15,10 @@ import {
 // 引入外部包
 import TabNavigator from 'react-native-tab-navigator';
 
+import Boy from './boy';
+import Girl from './girl';
+import PopularPage from './PopularPage';
+
 export default class HomePage extends Component {
 
   constructor(props){
@@ -31,21 +35,38 @@ export default class HomePage extends Component {
         <TabNavigator.Item
           selected={this.state.selectedTab === 'home'}
           title="Home"
-          renderIcon={() => <Image source={require('../../res/images/ic_favorite.png')} style={styles.tabImg}/>}
-          renderSelectedIcon={() => <Image source={require('../../res/images/ic_favorite.png')} style={[styles.tabImg,{tintColor:'red'}]}/>}
-          selectedTitleStyle={{color:'red'}}
-          badgeText="1"
+          renderIcon={() => <Image source={require('../../res/images/ic_polular.png')} style={styles.tabImg}/>}
+          renderSelectedIcon={() => <Image source={require('../../res/images/ic_polular.png')} style={[styles.tabImg,{tintColor:'black'}]}/>}
+          selectedTitleStyle={{color:'black'}}
           onPress={() => this.setState({selectedTab: 'home'})}>
-          <View style={styles.page1}></View>
+          <PopularPage/>
         </TabNavigator.Item>
         <TabNavigator.Item
-          selected={this.state.selectedTab === 'profile'}
-          title="Profile"
-          renderIcon={() => <Image source={require('../../res/images/ic_polular.png')} style={styles.tabImg}/>}
-          renderSelectedIcon={() => <Image source={require('../../res/images/ic_polular.png')} style={[styles.tabImg,{tintColor:'red'}]}/>}
-          selectedTitleStyle={{color:'red'}}
-          onPress={() => this.setState({selectedTab: 'profile'})}>
-          <View style={styles.page2}></View>
+          selected={this.state.selectedTab === 'trending'}
+          title="trending"
+          renderIcon={() => <Image source={require('../../res/images/ic_trending.png')} style={styles.tabImg}/>}
+          renderSelectedIcon={() => <Image source={require('../../res/images/ic_trending.png')} style={[styles.tabImg,{tintColor:'black'}]}/>}
+          selectedTitleStyle={{color:'black'}}
+          onPress={() => this.setState({selectedTab: 'trending'})}>
+          <Girl/>
+        </TabNavigator.Item>
+        <TabNavigator.Item
+          selected={this.state.selectedTab === 'favorite'}
+          title="favorite"
+          renderIcon={() => <Image source={require('../../res/images/ic_favorite.png')} style={styles.tabImg}/>}
+          renderSelectedIcon={() => <Image source={require('../../res/images/ic_favorite.png')} style={[styles.tabImg,{tintColor:'black'}]}/>}
+          selectedTitleStyle={{color:'black'}}
+          onPress={() => this.setState({selectedTab: 'favorite'})}>
+          <Girl/>
+        </TabNavigator.Item>
+        <TabNavigator.Item
+          selected={this.state.selectedTab === 'my'}
+          title="my"
+          renderIcon={() => <Image source={require('../../res/images/ic_my.png')} style={styles.tabImg}/>}
+          renderSelectedIcon={() => <Image source={require('../../res/images/ic_my.png')} style={[styles.tabImg,{tintColor:'black'}]}/>}
+          selectedTitleStyle={{color:'black'}}
+          onPress={() => this.setState({selectedTab: 'my'})}>
+          <Girl/>
         </TabNavigator.Item>
       </TabNavigator>
 
@@ -57,6 +78,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-
+  tabImg: {
+    width:28,
+    height:28,
+  },
 });
 
