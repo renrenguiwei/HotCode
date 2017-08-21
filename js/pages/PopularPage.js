@@ -7,6 +7,7 @@ import {
   StyleSheet,
   View,
   ListView,
+  RefreshControl,
 } from 'react-native';
 
 // 引入组件
@@ -60,6 +61,7 @@ class PopularTab extends Component{
     super(props);
     this.state = {
       dataSource:new ListView.DataSource({rowHasChanged:(r1,r2) => r1!==r2}),
+      onLoading:false,
     };
   }
 
@@ -68,11 +70,15 @@ class PopularTab extends Component{
   }
 
   onLoad(){
+    this.setState({
+      onLoading:true,
+    });
     const key = URL+this.props.tabLabel+QUERY_STR;
     DataRepository.get(key)
       .then(result=>{
         this.setState({
           dataSource:this.state.dataSource.cloneWithRows(result.items),
+          onLoading:false,
         })
       })
       .catch(error=>{
@@ -89,10 +95,20 @@ class PopularTab extends Component{
 
   render(){
     return (
-      <View>
+      <View style={{flex:1}}>
         <ListView
           dataSource = {this.state.dataSource}
           renderRow = {(data) => this.renderRow(data)}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.onLoading}
+              onRefresh={()=>this.onLoad()}
+              colors={['#000']}
+              tintColor={'#000'}
+              title={'Loading...'}
+              titleColor={'#000'}
+            />
+          }
         />
       </View>
     );

@@ -113,8 +113,8 @@ export default class ListViewTest extends Component{
           renderFooter={()=>this.renderFooter()}
           refreshControl={
             <RefreshControl
-              refreshing={this.state.onLoading}
-              onRefresh={this.onRefresh()}
+              refreshing={this.state.onLoading} // 刷新时是否显示指示器
+              onRefresh={this.onRefresh()}    // 视图开始刷新
             />
           }
         />
