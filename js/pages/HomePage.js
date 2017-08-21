@@ -15,8 +15,8 @@ import {
 // 引入外部包
 import TabNavigator from 'react-native-tab-navigator';
 
-import Boy from './boy';
 import Girl from './girl';
+import AsyncStorageTest from './AsyncStorageTest';
 import PopularPage from './PopularPage';
 
 export default class HomePage extends Component {
@@ -48,7 +48,7 @@ export default class HomePage extends Component {
           renderSelectedIcon={() => <Image source={require('../../res/images/ic_trending.png')} style={[styles.tabImg,{tintColor:'black'}]}/>}
           selectedTitleStyle={{color:'black'}}
           onPress={() => this.setState({selectedTab: 'trending'})}>
-          <Girl/>
+          <AsyncStorageTest/>
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'favorite'}
