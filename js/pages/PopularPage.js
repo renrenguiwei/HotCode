@@ -33,6 +33,13 @@ export default class PopularPage extends Component{
         />
 
         <ScrollableTabView
+          tabBarBackgroundColor='#000'
+          tabBarInactiveTextColor='mintcream'
+          tabBarActiveTextColor='#fff'
+          tabBarUnderlineStyle={{
+            backgroundColor:'#e7e7e7',
+            height:2,
+          }}
           renderTabBar={() => <ScrollableTabBar/>}
         >
           <PopularTab tabLabel="React" />

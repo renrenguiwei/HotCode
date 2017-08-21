@@ -17,6 +17,7 @@ export default class RepositoryCell extends Component{
     return (
       <TouchableOpacity
         style={styles.container}
+        activeOpacity={0.6}
       >
         <View style={styles.containerInner}>
           <Text style={styles.authorName}>{this.props.data.name}</Text>
@@ -50,12 +51,21 @@ const styles = StyleSheet.create({
   containerInner:{
     padding:10,
     backgroundColor:'white',
+    borderColor:'#ddd',
     marginLeft:5,
     marginRight:5,
     marginVertical:3,
     borderWidth:0.5,
     borderRadius:2,
 
+    // IOS阴影
+    shadowColor:'gray',
+    shadowOffset:{width:0.5,height:0.5},
+    shadowOpacity:0.4,
+    shadowRadius:1,
+
+    // Android阴影
+    elevation:2,
   },
   authorName:{
     color:'#212121',
@@ -85,6 +95,7 @@ const styles = StyleSheet.create({
   starImg:{
     width:22,
     height:22,
+    tintColor:'#000',
   },
 });
 
