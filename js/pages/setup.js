@@ -8,6 +8,7 @@ import {
 // 引入组件
 import CustomerComponents, {Navigator} from 'react-native-deprecated-custom-components';
 import WelcomPage from './WelcomePage';
+import HomePage from './HomePage';
 
 function setup(){
 
@@ -22,7 +23,7 @@ function setup(){
     render(){
       return(
         <Navigator
-          initialRoute={{component:WelcomPage}}
+          initialRoute={{component:HomePage}}
           renderScene={(route,navigator)=>this.renderScene(route,navigator)}
         />
       );
