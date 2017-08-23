@@ -33,7 +33,7 @@ export default class MyPage extends Component{
                 params:{...this.props}
               })
             }}
-          >自定义标签页</Text>
+          >进入自定义标签页</Text>
         </TouchableOpacity>
       </View>
     );
