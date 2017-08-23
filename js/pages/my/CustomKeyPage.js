@@ -7,11 +7,14 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
 
 // 引入组件
+import CheckBox from 'react-native-check-box';
+
 import NavigationBar from '../../common/NavigationBar';
 import ViewUtils from '../../util/ViewUtils';
 import LanguageDao,{FLAG_LANGUAGE} from '../../expand/dao/LanguageDao';
@@ -22,7 +25,7 @@ export default class CustomKeyPage extends Component{
     super(props);
     this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_key);
     this.state = {
-      dataArray:[]
+      dataArray:[],
     }
   }
 
@@ -46,6 +49,25 @@ export default class CustomKeyPage extends Component{
     this.props.navigator.pop();
   }
 
+  renderCheckBox(data){
+    let leftText = data.name;
+    return (
+      <CheckBox
+        style={{flex:1,padding:10}}
+        onClick={()=>this.onClick(data)}
+        isChecked={data.checked}
+        leftText={leftText}
+        checkedImage={<Image source={require('./img/ic_check_box.png')} style={{tintColor:'#000'}}/>}
+        unCheckedImage={<Image source={require('./img/ic_check_box_outline_blank.png')} style={{tintColor:'#000'}}/>}
+      />
+    );
+  }
+
+  onClick(data){
+    data.checked = !data.checked;
+    this.setState({})
+  }
+
   renderView(){
 
     if (!this.state.dataArray||this.state.dataArray.length===0) return null;
@@ -55,8 +77,8 @@ export default class CustomKeyPage extends Component{
       views.push(
         <View key={i}>
           <View style={styles.item}>
-            <Text>{this.state.dataArray[i].name}</Text>
-            <Text>{this.state.dataArray[i+1].name}</Text>
+            {this.renderCheckBox(this.state.dataArray[i])}
+            {this.renderCheckBox(this.state.dataArray[i+1])}
           </View>
           <View style={styles.line}></View>
         </View>
@@ -65,8 +87,8 @@ export default class CustomKeyPage extends Component{
     views.push(
       <View key={len-1}>
         <View style={styles.item}>
-          {len%2===0 ? <Text>{this.state.dataArray[len-2].name}</Text> : null}
-          <Text>{this.state.dataArray[len-1].name}</Text>
+          {len%2===0 ? this.renderCheckBox(this.state.dataArray[len-2]) : null}
+          {this.renderCheckBox(this.state.dataArray[len-1])}
         </View>
         <View style={styles.line}></View>
       </View>
@@ -118,7 +140,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   line:{
-    height:1,
+    height:0.3,
     backgroundColor:'#ccc',
   }
 });
