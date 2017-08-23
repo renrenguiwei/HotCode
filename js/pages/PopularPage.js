@@ -16,6 +16,7 @@ import ScrollableTabView ,{ScrollableTabBar} from 'react-native-scrollable-tab-v
 import DataRepository from '../expand/dao/DataRepository';
 import NavigationBar from '../common/NavigationBar';
 import RepositoryCell from '../common/RepositoryCell';
+import LanguageDao,{FLAG_LANGUAGE} from '../expand/dao/LanguageDao';
 
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars';
@@ -24,31 +25,57 @@ export default class PopularPage extends Component{
 
   constructor(props){
     super(props);
+    this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_key);
+    // popular页显示的语言
+    this.state = {
+      language:[],
+    };
+  }
+
+  componentDidMount(){
+    this.loadData();
+  }
+
+  // 加载静态数据文件或本地存储
+  loadData(){
+    this.languageDao.fetch()
+      .then(result=>{
+        this.setState({
+          language:result
+        })
+      })
+      .catch(error=>{
+        console.error(error)
+      })
   }
 
   render(){
+    // 解决ScrollableTab因不能提前计算出language长度，直接渲染闪烁BUG；所以先计算出长度，再渲染
+    let content = this.state.language.length>0?
+      <ScrollableTabView
+        tabBarBackgroundColor='#000'
+        tabBarInactiveTextColor='mintcream'
+        tabBarActiveTextColor='#fff'
+        tabBarUnderlineStyle={{
+          backgroundColor:'#e7e7e7',
+          height:2,
+        }}
+        renderTabBar={() => <ScrollableTabBar/>}
+      >
+        {/*
+         map方法遍历language数组，arr新数组（大概明白这个函数的意思）
+         */}
+        {this.state.language.map((result,i,arr)=>{
+          let lan = arr[i];
+          return lan.checked?<PopularTab tabLabel={lan.name} />:null
+        })}
+      </ScrollableTabView>:null;
     return (
       <View style={styles.container}>
         <NavigationBar
           title = {'Popular'}
         />
-
-        <ScrollableTabView
-          tabBarBackgroundColor='#000'
-          tabBarInactiveTextColor='mintcream'
-          tabBarActiveTextColor='#fff'
-          tabBarUnderlineStyle={{
-            backgroundColor:'#e7e7e7',
-            height:2,
-          }}
-          renderTabBar={() => <ScrollableTabBar/>}
-        >
-          <PopularTab tabLabel="React" />
-          <PopularTab tabLabel="Flow" />
-          <PopularTab tabLabel="Jest" />
-          <PopularTab tabLabel="Go" />
-        </ScrollableTabView>
-
+        {content}
       </View>
     );
   }

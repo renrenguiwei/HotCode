@@ -8,6 +8,7 @@ import {
   Text,
   View,
   Image,
+  Alert,
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
@@ -18,12 +19,14 @@ import CheckBox from 'react-native-check-box';
 import NavigationBar from '../../common/NavigationBar';
 import ViewUtils from '../../util/ViewUtils';
 import LanguageDao,{FLAG_LANGUAGE} from '../../expand/dao/LanguageDao';
+import ArrayUtils from '../../util/ArrayUtils';
 
 export default class CustomKeyPage extends Component{
 
   constructor(props){
     super(props);
     this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_key);
+    this.changeValues = []; // 存储改变后的数据
     this.state = {
       dataArray:[],
     }
@@ -33,6 +36,7 @@ export default class CustomKeyPage extends Component{
     this.loadData();
   }
 
+  // 加载静态数据文件或本地存储
   loadData(){
     this.languageDao.fetch()
       .then(result=>{
@@ -45,10 +49,35 @@ export default class CustomKeyPage extends Component{
       })
   }
 
+  // 保存键
   onSave(){
+    // 有改变存到AsyncStorgae内
+    if (this.changeValues.length!==0){
+      this.languageDao.save(this.state.dataArray);
+    }
+
+    // 有、没有改变都返回上一页
     this.props.navigator.pop();
   }
 
+  // 返回键
+  onBack(){
+    if (this.changeValues.length!==0){
+      Alert.alert(
+        "Confirm Exit",
+        "Do you want to save your changes before exitting?",
+        [
+          {text: 'NO', onPress: ()=>this.props.navigator.pop()},
+          {text: 'YES', onPress: ()=>this.onSave()}
+        ],
+        {cancelable: false}
+      );
+    }else{
+      this.props.navigator.pop();
+    }
+  }
+
+  // 渲染单个复选框
   renderCheckBox(data){
     let leftText = data.name;
     return (
@@ -63,13 +92,17 @@ export default class CustomKeyPage extends Component{
     );
   }
 
+  // 点击复选框
   onClick(data){
     data.checked = !data.checked;
-    this.setState({})
+    this.setState({})  // 应付复选框不可改变的BUG
+
+    ArrayUtils.updateArray(this.changeValues,data);
   }
 
   renderView(){
 
+    // 复选框从静态数据中遍历显示
     if (!this.state.dataArray||this.state.dataArray.length===0) return null;
     let views = [];
     let len = this.state.dataArray.length;
@@ -84,6 +117,7 @@ export default class CustomKeyPage extends Component{
         </View>
       )
     }
+    // 剩下的2个或1个
     views.push(
       <View key={len-1}>
         <View style={styles.item}>
@@ -109,7 +143,7 @@ export default class CustomKeyPage extends Component{
       <View style={styles.container}>
         <NavigationBar
           leftButton={
-            ViewUtils.getLeftButton(()=>this.onSave())
+            ViewUtils.getLeftButton(()=>this.onBack())
           }
           title={'Custom Key'}
           rightButton={rightButton}
