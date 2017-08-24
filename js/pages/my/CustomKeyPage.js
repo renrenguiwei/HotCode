@@ -139,6 +139,7 @@ export default class CustomKeyPage extends Component{
         <Text style={styles.title}>Save</Text>
       </View>
     </TouchableOpacity>;
+
     return (
       <View style={styles.container}>
         <NavigationBar
@@ -147,9 +148,6 @@ export default class CustomKeyPage extends Component{
           }
           title={'Custom Key'}
           rightButton={rightButton}
-          // statusBar={{
-          //   backgroundColor:'blue'
-          // }}
         />
         <ScrollView>
           {this.renderView()}
@@ -170,7 +168,7 @@ const styles = StyleSheet.create({
   },
   title:{
     color:'#fff',
-    fontSize:20,
+    fontSize:18,
   },
   item:{
     flexDirection:'row',
