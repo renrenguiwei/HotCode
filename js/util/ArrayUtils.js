@@ -23,4 +23,40 @@ export default class ArrayUtils{
     // 不包含
     array.push(item);
   }
+
+  /**
+   * 克隆一个数组
+   * 这个克隆函数感觉好鸡肋，直接赋值就可以实现
+   * @param from
+   *@returns {Array}
+   */
+  static clone (from){
+    if (!from) return [];
+    let newArray = [];
+    for (let i=0,len=from.length;i<len;i++){
+      newArray[i]=from[i];
+    }
+    return newArray;
+  }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

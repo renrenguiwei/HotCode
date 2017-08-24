@@ -147,6 +147,9 @@ export default class CustomKeyPage extends Component{
           }
           title={'Custom Key'}
           rightButton={rightButton}
+          // statusBar={{
+          //   backgroundColor:'blue'
+          // }}
         />
         <ScrollView>
           {this.renderView()}
