@@ -67,7 +67,7 @@ export default class PopularPage extends Component{
          */}
         {this.state.language.map((reuslt, i, arr)=>{
           let lan = arr[i];
-          return lan.checked ? <PopularTab tabLabel={lan.name} />:null
+          return lan.checked ? <PopularTab tabLabel={lan.name} />:null;
         })}
       </ScrollableTabView>:null;
     return (

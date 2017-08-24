@@ -43,6 +43,9 @@ export default class CustomKeyPage extends Component{
         this.setState({
           dataArray:result
         })
+        console.log(1);
+        console.log(result);
+        console.log(2);
       })
       .catch(error=>{
         console.error(error)
@@ -75,21 +78,6 @@ export default class CustomKeyPage extends Component{
     }else{
       this.props.navigator.pop();
     }
-  }
-
-  // 渲染单个复选框
-  renderCheckBox(data){
-    let leftText = data.name;
-    return (
-      <CheckBox
-        style={{flex:1,padding:10}}
-        onClick={()=>this.onClick(data)}
-        isChecked={data.checked}
-        leftText={leftText}
-        checkedImage={<Image source={require('./img/ic_check_box.png')} style={{tintColor:'#000'}}/>}
-        unCheckedImage={<Image source={require('./img/ic_check_box_outline_blank.png')} style={{tintColor:'#000'}}/>}
-      />
-    );
   }
 
   // 点击复选框
@@ -128,6 +116,22 @@ export default class CustomKeyPage extends Component{
       </View>
     )
     return views;
+  }
+
+  // 渲染单个复选框
+  renderCheckBox(data){
+    console.log(data);
+    let leftText = data.name;
+    return (
+      <CheckBox
+        style={{flex:1,padding:10}}
+        onClick={()=>this.onClick(data)}
+        isChecked={data.checked}
+        leftText={leftText}
+        checkedImage={<Image source={require('./img/ic_check_box.png')} style={{tintColor:'#000'}}/>}
+        unCheckedImage={<Image source={require('./img/ic_check_box_outline_blank.png')} style={{tintColor:'#000'}}/>}
+      />
+    );
   }
 
   render(){

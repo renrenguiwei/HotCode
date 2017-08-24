@@ -71,6 +71,7 @@ export default class SortKeyPage extends Component{
 
   // 返回上一页
   onBack(){
+
     if (ArrayUtils.isEqual(this.originCheckedArray,this.state.checkedArray)){
       this.props.navigator.pop();
       return;
@@ -119,8 +120,8 @@ export default class SortKeyPage extends Component{
       </View>
     </TouchableOpacity>;
 
-    let data = this.state.checkedArray;
-    let order = Object.keys(this.state.checkedArray);
+    // let data = this.state.checkedArray;
+    // let order = Object.keys(this.state.checkedArray);
     return (
       <View style={styles.container}>
         <NavigationBar
@@ -132,10 +133,10 @@ export default class SortKeyPage extends Component{
         />
         <SortableListView
           style={{ flex: 1 }}
-          data={data}
-          order={order}
+          data={this.state.checkedArray}
+          order={Object.keys(this.state.checkedArray)}
           onRowMoved={e => {
-            order.splice(e.to, 0, order.splice(e.from, 1)[0])
+            this.state.checkedArray.splice(e.to, 0, this.state.checkedArray.splice(e.from, 1)[0])
             this.forceUpdate()
           }}
           renderRow={row => <SortCell data={row} />}

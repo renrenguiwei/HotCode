@@ -26,18 +26,19 @@ export default class LanguageDao{
         if (error){
           reject(error);
         }else{
-          if (result){
+          if (!result){
+            // 子组件传出去的值，再传回来（不知道为何需要这样的验证）
+            let data = this.flag === FLAG_LANGUAGE.flag_key ? keys : null;
+            console.log(keys);
+            this.save(data);
+            resolve(data);
+          }else{
             try{
               resolve(JSON.parse(result));
             } catch(e){
               // 防止数据解析成对象失败，抛出错误
               reject(e);
             }
-          }else{
-            // 子组件传出去的值，再传回来（不知道为何需要这样的验证）
-            let data = this.flag === FLAG_LANGUAGE.flag_key ? keys : null;
-            this.save(data);
-            resolve(data);
           }
         }
       })
