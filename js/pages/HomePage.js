@@ -9,11 +9,13 @@ import {
   StyleSheet,
   Image,
   Text,
-  View
+  View,
+  DeviceEventEmitter
 } from 'react-native';
 
 // 引入外部包
 import TabNavigator from 'react-native-tab-navigator';
+import Toast,{DURATION} from 'react-native-easy-toast';
 
 import Girl from './girl';
 import AsyncStorageTest from './AsyncStorageTest';
@@ -29,9 +31,21 @@ export default class HomePage extends Component {
     };
   }
 
+  // Toast事件发射器
+  componentDidMount(){
+    this.listener = DeviceEventEmitter.addListener('showToast',(text)=>{
+      this.toast.show(text,DURATION.LENGTH_LONG);
+    });
+  }
+
+  // 组件被修改的时候，把上面的监听移除掉
+  componentWillUnmount(){
+    this.listener&&this.listener.remove();
+  }
+
   render() {
     return (
-
+      <View style={{flex:1,}}>
       <TabNavigator>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'home'}
@@ -70,7 +84,8 @@ export default class HomePage extends Component {
           <MyPage {...this.props}/>
         </TabNavigator.Item>
       </TabNavigator>
-
+      <Toast ref={toast=>this.toast=toast} />
+      </View>
     );
   }
 }

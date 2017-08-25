@@ -8,6 +8,7 @@ import {
   View,
   ListView,
   RefreshControl,
+  DeviceEventEmitter,
 } from 'react-native';
 
 // 引入组件
@@ -21,11 +22,13 @@ import LanguageDao,{FLAG_LANGUAGE} from '../expand/dao/LanguageDao';
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars';
 
+
 export default class PopularPage extends Component{
 
   constructor(props){
     super(props);
     this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_key);
+    // this.dataRepository = new DataRepository();
     // popular页显示的语言
     this.state = {
       language:[],
@@ -100,13 +103,31 @@ class PopularTab extends Component{
     this.setState({
       onLoading:true,
     });
-    const key = URL+this.props.tabLabel+QUERY_STR;
-    DataRepository.get(key)
+    let url = URL+this.props.tabLabel+QUERY_STR;
+    DataRepository
+      .fetchRepository(url)
       .then(result=>{
+        // 判断result取回的值
+        let items = result&&result.items?result.items:result?result:[];
         this.setState({
-          dataSource:this.state.dataSource.cloneWithRows(result.items),
+          dataSource:this.state.dataSource.cloneWithRows(items),
           onLoading:false,
         })
+        // 数据过期，做网络请求
+        // result.update_data永远无法获取到，导致数据只做缓存文件读取，不更新过时数据
+        if (result&&result.update_data&&!DataRepository.checkDate(result.update_data)){
+          DeviceEventEmitter.emit('showToast','数据过时');
+          return DataRepository.fetchNetRepository(url);
+        }else{
+          DeviceEventEmitter.emit('showToast','显示缓存数据');
+        }
+      })
+      .then(items=>{
+        if (!items||items.length===0)return;
+        this.setState({
+          dataSource:this.state.dataSource.cloneWithRows(items),
+        })
+        DeviceEventEmitter.emit('showToast','显示网络数据');
       })
       .catch(error=>{
           console.error(error)
