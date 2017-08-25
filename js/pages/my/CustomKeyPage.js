@@ -45,9 +45,6 @@ export default class CustomKeyPage extends Component{
         this.setState({
           dataArray:result
         })
-        console.log(1);
-        console.log(result);
-        console.log(2);
       })
       .catch(error=>{
         console.error(error)
@@ -58,6 +55,10 @@ export default class CustomKeyPage extends Component{
   onSave(){
     // 有改变存到AsyncStorgae内
     if (this.changeValues.length!==0){
+      for (let i=0,l=this.changeValues.length;i<l;i++){
+        // 双层遍历，把改变的值拿出来一一与原数据对比，找到就删除
+        ArrayUtils.remove(this.state.dataArray,this.changeValues[i]);
+      }
       this.languageDao.save(this.state.dataArray);
     }
 
@@ -83,9 +84,11 @@ export default class CustomKeyPage extends Component{
   }
 
   // 点击复选框
-  onClick(data){
-    data.checked = !data.checked;
+  onClicks(data){
     this.setState({})  // 应付复选框不可改变的BUG
+    // 自定义标签 !false状态下走checked改变
+    // 标签移除   !true状态下不改变
+    if(!this.isRemoveKey)data.checked = !data.checked;
 
     ArrayUtils.updateArray(this.changeValues,data);
   }
@@ -128,7 +131,7 @@ export default class CustomKeyPage extends Component{
     return (
       <CheckBox
         style={{flex:1,padding:10}}
-        onClick={()=>this.onClick(data)}
+        onClick={()=>this.onClicks(data)}
         isChecked={isChecked}
         leftText={leftText}
         checkedImage={<Image source={require('./img/ic_check_box.png')} style={{tintColor:'#000'}}/>}

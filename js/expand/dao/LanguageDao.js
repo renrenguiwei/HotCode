@@ -29,7 +29,6 @@ export default class LanguageDao{
           if (!result){
             // 子组件传出去的值，再传回来（不知道为何需要这样的验证）
             let data = this.flag === FLAG_LANGUAGE.flag_key ? keys : null;
-            console.log(keys);
             this.save(data);
             resolve(data);
           }else{
