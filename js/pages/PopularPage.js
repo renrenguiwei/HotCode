@@ -18,6 +18,7 @@ import DataRepository from '../expand/dao/DataRepository';
 import NavigationBar from '../common/NavigationBar';
 import RepositoryCell from '../common/RepositoryCell';
 import LanguageDao,{FLAG_LANGUAGE} from '../expand/dao/LanguageDao';
+import RepositoryDetail from './RepositoryDetail';
 
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars';
@@ -70,7 +71,7 @@ export default class PopularPage extends Component{
          */}
         {this.state.language.map((reuslt, i, arr)=>{
           let lan = arr[i];
-          return lan.checked ? <PopularTab tabLabel={lan.name} />:null;
+          return lan.checked ? <PopularTab tabLabel={lan.name} {...this.props}/>:null;
         })}
       </ScrollableTabView>:null;
     return (
@@ -134,10 +135,24 @@ class PopularTab extends Component{
       })
   }
 
+  onSelect(data){
+    this.props.navigator.push({
+      component:RepositoryDetail,
+      params:{
+        item:data,
+        ...this.props,
+      }
+    });
+  }
+
   // 渲染ListView数据
   renderRow(data){
     return (
-      <RepositoryCell data={data}/>   // 封装单独渲染组件
+      <RepositoryCell
+        key={data.id}
+        data={data}
+        onSelect={()=>this.onSelect(data)}
+      />   // 封装单独渲染组件
     );
   }
 

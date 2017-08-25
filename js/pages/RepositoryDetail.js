@@ -15,15 +15,18 @@ import {
 
 // 引入组件
 import NavigationBar from '../common/NavigationBar';
+import ViewUtils from '../util/ViewUtils';
 
 const URL = 'http://www.imooc.com/';
-export default class WebViewText extends Component{
+export default class RepositoryDetail extends Component{
 
   constructor(props){
     super(props);
+    let url = this.props.item.html_url;
+    let title = this.props.item.full_name;
     this.state = {
-      url:URL,
-      title:'',
+      url:url,
+      title:title,
       canBack:false,
     };
   }
@@ -32,7 +35,8 @@ export default class WebViewText extends Component{
     if (this.state.canBack){
       this.webView.goBack();
     }else{
-      DeviceEventEmitter.emit('showToast','到顶喽！');
+      // DeviceEventEmitter.emit('showToast','到顶喽！');
+      this.props.navigator.pop();
     }
   }
 
@@ -47,7 +51,7 @@ export default class WebViewText extends Component{
   onNavigationStateChange(e){
     this.setState({
       url:e.url,
-      title:e.title,
+      // title:e.title, // webview的title用列表页短name，网页title太长
       canBack:e.canGoBack,
     });
   }
@@ -56,32 +60,15 @@ export default class WebViewText extends Component{
     return (
       <View style={styles.container}>
         <NavigationBar
-          title={'WebView'}
+          title={this.state.title}
+          leftButton={ViewUtils.getLeftButton(()=>this.onBack())}
         />
-        <View style={styles.wvTop}>
-          <Text
-            style={styles.tips}
-            onPress = {()=>{
-              this.onBack();
-            }}
-          >Back</Text>
-          <TextInput
-            style={styles.input}
-            defaultValue={URL}
-            onChangeText={text=>this.text=text}
-          />
-          <Text
-            style={styles.tips}
-            onPress = {()=>{
-              this.go();
-            }}
-          >Go</Text>
-        </View>
         <WebView
           style={styles.webView}
           ref={webView=>this.webView=webView}
           onNavigationStateChange={(e)=>this.onNavigationStateChange(e)}
           source={{uri: this.state.url}}
+          startInLoadingState={true}
         />
       </View>
     );
@@ -92,6 +79,7 @@ export default class WebViewText extends Component{
 const styles = StyleSheet.create({
   container:{
     flex:1,
+    backgroundColor:'#fff',
   },
   wvTop:{
     flexDirection:'row',

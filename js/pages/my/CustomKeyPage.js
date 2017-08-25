@@ -55,9 +55,11 @@ export default class CustomKeyPage extends Component{
   onSave(){
     // 有改变存到AsyncStorgae内
     if (this.changeValues.length!==0){
-      for (let i=0,l=this.changeValues.length;i<l;i++){
-        // 双层遍历，把改变的值拿出来一一与原数据对比，找到就删除
-        ArrayUtils.remove(this.state.dataArray,this.changeValues[i]);
+      if (this.isRemoveKey) {
+        for (let i = 0, l = this.changeValues.length; i < l; i++) {
+          // 双层遍历，把改变的值拿出来一一与原数据对比，找到就删除
+          ArrayUtils.remove(this.state.dataArray, this.changeValues[i]);
+        }
       }
       this.languageDao.save(this.state.dataArray);
     }

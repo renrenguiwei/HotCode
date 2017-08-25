@@ -55,7 +55,7 @@ export default class HomePage extends Component {
           renderSelectedIcon={() => <Image source={require('../../res/images/ic_polular.png')} style={[styles.tabImg,{tintColor:'black'}]}/>}
           selectedTitleStyle={{color:'black'}}
           onPress={() => this.setState({selectedTab: 'home'})}>
-          <PopularPage/>
+          <PopularPage {...this.props}/>
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'trending'}

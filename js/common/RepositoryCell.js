@@ -18,6 +18,7 @@ export default class RepositoryCell extends Component{
       <TouchableOpacity
         style={styles.container}
         activeOpacity={0.6}
+        onPress={this.props.onSelect}
       >
         <View style={styles.containerInner}>
           <Text style={styles.authorName}>{this.props.data.name}</Text>
