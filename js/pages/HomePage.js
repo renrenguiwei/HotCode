@@ -18,6 +18,7 @@ import TabNavigator from 'react-native-tab-navigator';
 import Toast,{DURATION} from 'react-native-easy-toast';
 
 import Girl from './girl';
+import WebViewText from './WebViewText';
 import AsyncStorageTest from './AsyncStorageTest';
 import PopularPage from './PopularPage';
 import MyPage from './my/MyPage';
@@ -72,7 +73,7 @@ export default class HomePage extends Component {
           renderSelectedIcon={() => <Image source={require('../../res/images/ic_favorite.png')} style={[styles.tabImg,{tintColor:'black'}]}/>}
           selectedTitleStyle={{color:'black'}}
           onPress={() => this.setState({selectedTab: 'favorite'})}>
-          <Girl/>
+          <WebViewText/>
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'my'}
