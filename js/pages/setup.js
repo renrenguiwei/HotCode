@@ -17,7 +17,7 @@ function setup(){
 
     renderScene(route,navigator){
       let Component = route.component;
-      return <Component navigator={navigator} {...route.props}/>;
+      return <Component navigator={navigator} {...route.params}/>;
     }
 
     render(){

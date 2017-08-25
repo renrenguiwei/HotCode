@@ -27,6 +27,8 @@ export default class CustomKeyPage extends Component{
     super(props);
     this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_key);
     this.changeValues = []; // 存储改变后的数据
+    // this.isRemoveKey = this.props.isRemoveKey?true:false;
+    this.isRemoveKey = !!this.props.isRemoveKey;
     this.state = {
       dataArray:[],
     }
@@ -120,13 +122,14 @@ export default class CustomKeyPage extends Component{
 
   // 渲染单个复选框
   renderCheckBox(data){
-    console.log(data);
     let leftText = data.name;
+    // 移除标签进来
+    let isChecked = this.isRemoveKey ? false :data.checked;
     return (
       <CheckBox
         style={{flex:1,padding:10}}
         onClick={()=>this.onClick(data)}
-        isChecked={data.checked}
+        isChecked={isChecked}
         leftText={leftText}
         checkedImage={<Image source={require('./img/ic_check_box.png')} style={{tintColor:'#000'}}/>}
         unCheckedImage={<Image source={require('./img/ic_check_box_outline_blank.png')} style={{tintColor:'#000'}}/>}
@@ -135,22 +138,23 @@ export default class CustomKeyPage extends Component{
   }
 
   render(){
+    let title = this.isRemoveKey?'Remove Key':'Custome Key';
+    let rightButtonTitle = this.isRemoveKey?'Remove':'Save';
     let rightButton = <TouchableOpacity
       activeOpacity={0.6}
       onPress={()=>this.onSave()}
     >
       <View style={{margin:10}}>
-        <Text style={styles.title}>Save</Text>
+        <Text style={styles.title}>{rightButtonTitle}</Text>
       </View>
     </TouchableOpacity>;
-
     return (
       <View style={styles.container}>
         <NavigationBar
           leftButton={
             ViewUtils.getLeftButton(()=>this.onBack())
           }
-          title={'Custom Key'}
+          title={title}
           rightButton={rightButton}
         />
         <ScrollView>

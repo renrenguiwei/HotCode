@@ -17,6 +17,10 @@ import SortKeyPage from './SortKeyPage';
 
 export default class MyPage extends Component{
 
+  constructor(props){
+    super(props);
+  }
+
   render(){
     return (
       <View style={styles.container}>
@@ -31,7 +35,9 @@ export default class MyPage extends Component{
             onPress={()=>{
               this.props.navigator.push({
                 component:CustomKeyPage,
-                params:{...this.props}
+                params:{
+                  ...this.props,
+                }
               })
             }}
           >进入自定义标签页</Text>
@@ -49,6 +55,23 @@ export default class MyPage extends Component{
               })
             }}
           >进入标签排序页</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          activeOpacity={0.6}
+        >
+          <Text
+            style={styles.word}
+            onPress={()=>{
+              this.props.navigator.push({
+                component:CustomKeyPage,
+                params:{
+                  ...this.props,
+                  isRemoveKey:true,
+                }
+              })
+            }}
+          >标签移除</Text>
         </TouchableOpacity>
       </View>
     );
